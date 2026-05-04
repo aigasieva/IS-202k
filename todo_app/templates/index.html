@@ -11,10 +11,6 @@
         h1 {
             color: blue;
         }
-        .done {
-            text-decoration: line-through;
-            color: gray;
-        }
         ul {
             list-style: none;
             padding: 0;
@@ -46,6 +42,12 @@
         }
         a:hover {
             background-color: #cc0000;
+        }
+        a.edit-btn {
+            background-color: #2196F3;
+        }
+        a.edit-btn:hover {
+            background-color: #0b7dda;
         }
         .clear-btn {
             background-color: #ff9900;
@@ -80,6 +82,7 @@
         <li>
             <span class="task-text">{{ task.text }}</span>
             <span class="task-date">{{ task.date }}</span>
+            <a href="/edit/{{ loop.index0 }}" class="edit-btn">✏️ Редактировать</a>
             <a href="/delete/{{ loop.index0 }}">🗑 Удалить</a>
         </li>
         {% endfor %}
@@ -89,7 +92,7 @@
         <p>✨ Нет задач. Добавьте первую!</p>
     {% endif %}
 
-    <a href="/clear" class="clear-btn" style="background-color:#ff9900; padding:8px 15px; border-radius:5px; color:white; display:inline-block;">🧹 Очистить всё</a>
+    <a href="/clear" class="clear-btn">🧹 Очистить всё</a>
 
     <h2>➕ Добавить задачу</h2>
     <form method="POST" action="/add">
