@@ -3,76 +3,185 @@
 <head>
     <title>Список дел</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f0f0;
             margin: 40px;
         }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
         h1 {
             color: blue;
+            text-align: center;
+            margin-bottom: 20px;
         }
-        .filter-buttons {
+        
+        .search-form {
+            display: flex;
             margin: 20px 0;
         }
+        
+        .search-form input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            font-size: 16px;
+        }
+        
+        .search-form button {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        
+        .sort-links {
+            margin: 15px 0;
+            text-align: center;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        
+        .sort-links a {
+            color: #2196F3;
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .sort-links a:hover {
+            background: #e0e0e0;
+        }
+        
+        .sort-links .active {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .filter-buttons {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
         .filter-buttons a {
             background-color: #666;
             color: white;
             padding: 8px 15px;
             border-radius: 5px;
             text-decoration: none;
-            margin-right: 10px;
         }
+        
         .filter-buttons a.active {
             background-color: #2196F3;
         }
-        .filter-buttons a:hover {
-            background-color: #444;
-        }
+        
         .batch-buttons {
             margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
+        
         .batch-buttons a {
             background-color: #2196F3;
             color: white;
             padding: 8px 15px;
             border-radius: 5px;
             text-decoration: none;
-            margin-right: 10px;
         }
-        .batch-buttons a:hover {
-            background-color: #0b7dda;
-        }
+        
         .clear-btn {
             background-color: #ff9900;
         }
-        .clear-btn:hover {
-            background-color: #cc7700;
-        }
+        
         ul {
             list-style: none;
             padding: 0;
         }
+        
         li {
             margin: 10px 0;
-            background: white;
-            padding: 10px;
-            border-radius: 5px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+        
+        li.high {
+            border-left: 5px solid red;
+            background-color: #ffe6e6;
+        }
+        
+        li.medium {
+            border-left: 5px solid orange;
+            background-color: #fff0e6;
+        }
+        
+        li.low {
+            border-left: 5px solid green;
+            background-color: #e6ffe6;
+        }
+        
         .task-text {
             flex-grow: 1;
         }
+        
         .task-date {
             font-size: 12px;
             color: gray;
             margin-right: 15px;
         }
+        
         .completed {
             text-decoration: line-through;
             color: gray;
         }
+        
+        .priority-badge {
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 15px;
+            margin-right: 10px;
+        }
+        
+        .priority-high {
+            background-color: red;
+            color: white;
+        }
+        
+        .priority-medium {
+            background-color: orange;
+            color: white;
+        }
+        
+        .priority-low {
+            background-color: green;
+            color: white;
+        }
+        
         a {
             text-decoration: none;
             background-color: #ff4444;
@@ -80,92 +189,163 @@
             padding: 5px 10px;
             border-radius: 3px;
             margin-left: 5px;
+            font-size: 12px;
         }
-        a:hover {
-            background-color: #cc0000;
-        }
+        
         a.edit-btn {
             background-color: #2196F3;
         }
-        a.edit-btn:hover {
-            background-color: #0b7dda;
-        }
+        
         a.toggle-btn {
             background-color: #4CAF50;
         }
-        a.toggle-btn:hover {
-            background-color: #45a049;
-        }
+        
         form {
             margin-top: 20px;
+            display: flex;
+            gap: 10px;
         }
+        
         input[type="text"] {
-            padding: 8px;
-            width: 300px;
+            padding: 10px;
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
         }
+        
+        select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
         button {
-            padding: 8px 15px;
+            padding: 10px 20px;
             background-color: green;
             color: white;
             border: none;
-            border-radius: 3px;
+            border-radius: 5px;
             cursor: pointer;
         }
+        
         .counter {
             font-size: 14px;
             background-color: #ddd;
             display: inline-block;
-            padding: 5px 10px;
+            padding: 5px 12px;
             border-radius: 20px;
             margin-bottom: 15px;
+        }
+        
+        .stats {
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .stats span {
+            margin-right: 15px;
+            padding: 3px 8px;
+            border-radius: 15px;
+        }
+        
+        .stats .high-count { background-color: #ffcccc; color: red; }
+        .stats .medium-count { background-color: #ffe6cc; color: orange; }
+        .stats .low-count { background-color: #ccffcc; color: green; }
+        
+        .info-text {
+            text-align: center;
+            color: #666;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <h1>📋 Мои задачи</h1>
-    
-    <div class="counter">
-        📊 Осталось задач: {{ tasks|selectattr('done', 'equalto', False)|list|length }}
+    <div class="container">
+        <h1>📋 Мои задачи</h1>
+        
+        <form action="/search" method="GET" class="search-form">
+            <input type="text" name="q" placeholder="🔍 Поиск по задачам..." value="{{ search_query or '' }}">
+            <button type="submit">Найти</button>
+        </form>
+        
+        <div class="sort-links">
+            <strong>Сортировка:</strong>
+            <a href="/sort/date" {% if filter_type == 'sort_date' %}class="active"{% endif %}>📅 По дате</a>
+            <a href="/sort/status" {% if filter_type == 'sort_status' %}class="active"{% endif %}>✅ По статусу</a>
+            <a href="/sort/priority" {% if filter_type == 'sort_priority' %}class="active"{% endif %}>⭐ По приоритету</a>
+            <a href="/sort/alpha" {% if filter_type == 'sort_alpha' %}class="active"{% endif %}>🔤 По алфавиту</a>
+        </div>
+        
+        <div class="counter">
+            📊 Осталось задач: {{ tasks|selectattr('done', 'equalto', False)|list|length }}
+        </div>
+
+        <div class="stats">
+            🏷️ Приоритеты:
+            <span class="high-count">🔴 Высоких: {{ tasks|selectattr('priority', 'equalto', 'высокий')|list|length }}</span>
+            <span class="medium-count">🟠 Средних: {{ tasks|selectattr('priority', 'equalto', 'средний')|list|length }}</span>
+            <span class="low-count">🟢 Низких: {{ tasks|selectattr('priority', 'equalto', 'низкий')|list|length }}</span>
+        </div>
+
+        <div class="filter-buttons">
+            <a href="/" {% if filter_type == 'all' %}class="active"{% endif %}>📋 Все задачи</a>
+            <a href="/active" {% if filter_type == 'active' %}class="active"{% endif %}>🟢 Активные</a>
+            <a href="/completed" {% if filter_type == 'completed' %}class="active"{% endif %}>✅ Выполненные</a>
+        </div>
+
+        <div class="batch-buttons">
+            <a href="/complete-all">✔️ Выполнить все</a>
+            <a href="/uncomplete-all">🔄 Отменить все</a>
+            <a href="/clear" class="clear-btn">🧹 Очистить всё</a>
+        </div>
+
+        {% if search_query %}
+            <p class="info-text">🔎 Результаты поиска: "{{ search_query }}" (найдено {{ tasks|length }} задач)</p>
+        {% endif %}
+
+        <ul>
+            {% for task in tasks %}
+            <li class="{% if task.priority == 'высокий' %}high{% elif task.priority == 'средний' %}medium{% elif task.priority == 'низкий' %}low{% endif %}">
+                <span class="task-text">
+                    {% if task.done %}
+                        <span class="completed">{{ task.text }}</span>
+                    {% else %}
+                        {{ task.text }}
+                    {% endif %}
+                </span>
+                <span class="priority-badge 
+                    {% if task.priority == 'высокий' %}priority-high
+                    {% elif task.priority == 'средний' %}priority-medium
+                    {% elif task.priority == 'низкий' %}priority-low
+                    {% endif %}">
+                    {% if task.priority == 'высокий' %}🔴 Высокий
+                    {% elif task.priority == 'средний' %}🟠 Средний
+                    {% elif task.priority == 'низкий' %}🟢 Низкий
+                    {% endif %}
+                </span>
+                <span class="task-date">{{ task.date }}</span>
+                <a href="/toggle/{{ loop.index0 }}" class="toggle-btn">{% if task.done %}🔄 Отменить{% else %}✅ Выполнить{% endif %}</a>
+                <a href="/edit/{{ loop.index0 }}" class="edit-btn">✏️ Редактировать</a>
+                <a href="/delete/{{ loop.index0 }}">🗑 Удалить</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+        {% if tasks|length == 0 %}
+            <p class="info-text">✨ Нет задач. Добавьте первую!</p>
+        {% endif %}
+
+        <h2>➕ Добавить задачу</h2>
+        <form method="POST" action="/add">
+            <input type="text" name="task" placeholder="Новая задача" required>
+            <select name="priority">
+                <option value="высокий">🔴 Высокий</option>
+                <option value="средний" selected>🟠 Средний</option>
+                <option value="низкий">🟢 Низкий</option>
+            </select>
+            <button type="submit">Добавить</button>
+        </form>
     </div>
-
-    <div class="filter-buttons">
-        <a href="/" {% if filter_type == 'all' %}class="active"{% endif %}>📋 Все задачи</a>
-        <a href="/active" {% if filter_type == 'active' %}class="active"{% endif %}>🟢 Активные</a>
-        <a href="/completed" {% if filter_type == 'completed' %}class="active"{% endif %}>✅ Выполненные</a>
-    </div>
-
-    <div class="batch-buttons">
-        <a href="/complete-all">✔️ Выполнить все</a>
-        <a href="/uncomplete-all">🔄 Отменить все</a>
-        <a href="/clear" class="clear-btn">🧹 Очистить всё</a>
-    </div>
-
-    <ul>
-        {% for task in tasks %}
-        <li>
-            <span class="task-text">
-                {% if task.done %}
-                    <span class="completed">{{ task.text }}</span>
-                {% else %}
-                    {{ task.text }}
-                {% endif %}
-            </span>
-            <span class="task-date">{{ task.date }}</span>
-            <a href="/toggle/{{ loop.index0 }}" class="toggle-btn">{% if task.done %}🔄 Отменить{% else %}✅ Выполнить{% endif %}</a>
-            <a href="/edit/{{ loop.index0 }}" class="edit-btn">✏️ Редактировать</a>
-            <a href="/delete/{{ loop.index0 }}">🗑 Удалить</a>
-        </li>
-        {% endfor %}
-    </ul>
-
-    {% if tasks|length == 0 %}
-        <p>✨ Нет задач. Добавьте первую!</p>
-    {% endif %}
-
-    <h2>➕ Добавить задачу</h2>
-    <form method="POST" action="/add">
-        <input type="text" name="task" placeholder="Новая задача" required>
-        <button type="submit">Добавить</button>
-    </form>
 </body>
 </html>

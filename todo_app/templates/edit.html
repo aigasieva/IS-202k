@@ -8,15 +8,24 @@
             background-color: #f0f0f0;
             margin: 40px;
         }
-        h1 {
-            color: blue;
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
         }
-        input, button {
-            padding: 8px;
+        h1 { color: blue; }
+        input, select, button {
+            padding: 10px;
             margin: 5px;
         }
         input {
-            width: 300px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        select {
+            width: 100%;
         }
         .message {
             color: red;
@@ -25,48 +34,57 @@
             border-radius: 5px;
             margin: 10px 0;
         }
-        .success {
-            color: green;
-            background-color: #ccffcc;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
         button {
             background-color: green;
             color: white;
             border: none;
-            border-radius: 3px;
+            border-radius: 5px;
             cursor: pointer;
+            padding: 10px 20px;
         }
         a {
             text-decoration: none;
             background-color: #666;
             color: white;
-            padding: 8px 15px;
-            border-radius: 3px;
-            margin-left: 5px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 10px;
         }
-        a:hover {
-            background-color: #444;
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>✏️ Редактирование задачи</h1>
+    <div class="container">
+        <h1>✏️ Редактирование задачи</h1>
 
-    {% if message %}
-        <p class="message">{{ message }}</p>
-    {% endif %}
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
 
-    {% if success %}
-        <p class="success">{{ success }}</p>
-    {% endif %}
-
-    <form method="POST">
-        <input type="text" name="task" value="{{ task.text }}" required>
-        <button type="submit">💾 Сохранить</button>
-        <a href="/">❌ Отмена</a>
-    </form>
+        <form method="POST">
+            <div class="form-group">
+                <label>Текст задачи:</label>
+                <input type="text" name="task" value="{{ task.text }}" required>
+            </div>
+            <div class="form-group">
+                <label>Приоритет:</label>
+                <select name="priority">
+                    <option value="высокий" {% if task.priority == 'высокий' %}selected{% endif %}>🔴 Высокий</option>
+                    <option value="средний" {% if task.priority == 'средний' %}selected{% endif %}>🟠 Средний</option>
+                    <option value="низкий" {% if task.priority == 'низкий' %}selected{% endif %}>🟢 Низкий</option>
+                </select>
+            </div>
+            <button type="submit">💾 Сохранить</button>
+            <a href="/">❌ Отмена</a>
+        </form>
+    </div>
 </body>
 </html>
