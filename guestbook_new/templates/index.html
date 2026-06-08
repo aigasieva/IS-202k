@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гостевая книга</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>📖 Гостевая книга</h1>
+        
+        {% if success %}
+        <div class="alert success">{{ success }}</div>
+        {% endif %}
+        
+        {% if error %}
+        <div class="alert error">{{ error }}</div>
+        {% endif %}
+        
+        <h2>📝 Сообщения</h2>
+        
+        {% if messages %}
+            {% for msg in messages %}
+            <div class="message {% if loop.index0 % 2 == 0 %}even{% else %}odd{% endif %}">
+                <div class="message-header">
+                    <span class="name">👤 {{ msg.name }}</span>
+                    <span class="date">📅 {{ msg.date_ru }}</span>
+                </div>
+                <div class="message-text">💬 {{ msg.message }}</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty">Пока нет сообщений. Будьте первым!</p>
+        {% endif %}
+        
+        <div class="form-section">
+            <h2>✉️ Написать сообщение</h2>
+            <form method="POST" action="/add">
+                <input type="text" name="name" placeholder="Ваше имя" required>
+                <textarea name="message" placeholder="Ваше сообщение" rows="4" required></textarea>
+                <button type="submit">✉️ Отправить</button>
+            </form>
+        </div>
+        
+        <footer>Гостевая книга | Flask + SQLite</footer>
+    </div>
+    
+    <script>
+        setTimeout(function() {
+            var alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                alert.style.transition = 'opacity 0.5s';
+                alert.style.opacity = '0';
+                setTimeout(function() {
+                    alert.style.display = 'none';
+                }, 500);
+            });
+        }, 3000);
+    </script>
+</body>
+</html>
