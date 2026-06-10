@@ -33,6 +33,24 @@ h2 {
     padding-left: 12px;
 }
 
+/* Блок авторизации */
+.auth-links {
+    text-align: right;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.auth-links a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
 /* Уведомления */
 .alert {
     padding: 12px;
@@ -115,7 +133,6 @@ h2 {
     background: #f5f5f5;
 }
 
-/* Свежие сообщения (сегодня) */
 .message.fresh {
     background-color: #fff3cd;
     border-left: 4px solid #ffc107;
@@ -140,7 +157,6 @@ h2 {
     font-size: 0.85em;
 }
 
-/* Кнопка удаления одного сообщения */
 .delete-btn {
     color: red;
     text-decoration: none;
@@ -169,7 +185,6 @@ h2 {
     border-radius: 12px;
 }
 
-/* Кнопка удаления всех сообщений */
 .delete-all-section {
     text-align: center;
     margin: 20px 0;
@@ -192,17 +207,26 @@ h2 {
     background: #c82333;
 }
 
-/* Форма */
 .form-section {
     margin-top: 30px;
     padding-top: 20px;
     border-top: 2px solid #eee;
 }
 
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
 input, textarea {
     width: 100%;
     padding: 12px;
-    margin-bottom: 15px;
     border: 2px solid #ddd;
     border-radius: 8px;
     font-size: 14px;
@@ -228,6 +252,15 @@ button {
 
 button:hover {
     transform: translateY(-2px);
+}
+
+/* Страница входа */
+.login-info {
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 10px;
 }
 
 /* Страница подтверждения удаления всех */

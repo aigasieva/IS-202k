@@ -10,6 +10,8 @@ def get_db_connection():
 
 def init_db():
     conn = get_db_connection()
+    
+    # Таблица сообщений
     conn.execute('''
         CREATE TABLE IF NOT EXISTS messages (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -18,12 +20,27 @@ def init_db():
             created_at DATE NOT NULL
         )
     ''')
+    
+    # Таблица пользователей
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL
+        )
+    ''')
+    
+    # Добавляем администратора, если его ещё нет
+    conn.execute(
+        'INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)',
+        ('admin', '123')
+    )
+    
     conn.commit()
     conn.close()
-    print("База данных готова")
+    print("База данных готова (таблицы messages и users)")
 
 def get_all_messages(sort_order='DESC'):
-    """Возвращает все сообщения с сортировкой по дате"""
     conn = get_db_connection()
     messages = conn.execute(
         f'SELECT * FROM messages ORDER BY created_at {sort_order}'
@@ -41,22 +58,29 @@ def add_message(name, message):
     conn.close()
 
 def delete_message(message_id):
-    """Удаляет сообщение по id"""
     conn = get_db_connection()
     conn.execute('DELETE FROM messages WHERE id = ?', (message_id,))
     conn.commit()
     conn.close()
 
 def delete_all_messages():
-    """Удаляет все сообщения"""
     conn = get_db_connection()
     conn.execute('DELETE FROM messages')
     conn.commit()
     conn.close()
 
 def get_message_count():
-    """Возвращает количество сообщений"""
     conn = get_db_connection()
     count = conn.execute('SELECT COUNT(*) FROM messages').fetchone()[0]
     conn.close()
     return count
+
+def check_user(username, password):
+    """Проверяет, существует ли пользователь с таким логином и паролем"""
+    conn = get_db_connection()
+    user = conn.execute(
+        'SELECT * FROM users WHERE username = ? AND password = ?',
+        (username, password)
+    ).fetchone()
+    conn.close()
+    return user is not None
