@@ -22,10 +22,11 @@ def init_db():
     conn.close()
     print("База данных готова")
 
-def get_all_messages():
+def get_all_messages(sort_order='DESC'):
+    """Возвращает все сообщения с сортировкой по дате"""
     conn = get_db_connection()
     messages = conn.execute(
-        'SELECT * FROM messages ORDER BY created_at DESC'
+        f'SELECT * FROM messages ORDER BY created_at {sort_order}'
     ).fetchall()
     conn.close()
     return messages
@@ -38,3 +39,24 @@ def add_message(name, message):
     )
     conn.commit()
     conn.close()
+
+def delete_message(message_id):
+    """Удаляет сообщение по id"""
+    conn = get_db_connection()
+    conn.execute('DELETE FROM messages WHERE id = ?', (message_id,))
+    conn.commit()
+    conn.close()
+
+def delete_all_messages():
+    """Удаляет все сообщения"""
+    conn = get_db_connection()
+    conn.execute('DELETE FROM messages')
+    conn.commit()
+    conn.close()
+
+def get_message_count():
+    """Возвращает количество сообщений"""
+    conn = get_db_connection()
+    count = conn.execute('SELECT COUNT(*) FROM messages').fetchone()[0]
+    conn.close()
+    return count

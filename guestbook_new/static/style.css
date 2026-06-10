@@ -33,6 +33,7 @@ h2 {
     padding-left: 12px;
 }
 
+/* Уведомления */
 .alert {
     padding: 12px;
     border-radius: 10px;
@@ -52,11 +53,58 @@ h2 {
     border: 1px solid #f5c6cb;
 }
 
+/* Счётчик */
+.counter {
+    background: #e9ecef;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Ссылки сортировки */
+.sort-links {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
+.sort-links span {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.sort-links a {
+    color: #667eea;
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.sort-links a:hover {
+    background: #e0e0e0;
+}
+
+.sort-links a.active {
+    background: #667eea;
+    color: white;
+}
+
+/* Сообщения */
 .message {
     padding: 15px;
     margin-bottom: 12px;
     border-radius: 12px;
     border: 1px solid #eee;
+    transition: transform 0.2s;
+}
+
+.message:hover {
+    transform: translateX(3px);
 }
 
 .message.even {
@@ -67,10 +115,19 @@ h2 {
     background: #f5f5f5;
 }
 
+/* Свежие сообщения (сегодня) */
+.message.fresh {
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+}
+
 .message-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .name {
@@ -81,6 +138,21 @@ h2 {
 .date {
     color: #999;
     font-size: 0.85em;
+}
+
+/* Кнопка удаления одного сообщения */
+.delete-btn {
+    color: red;
+    text-decoration: none;
+    font-size: 0.9em;
+    padding: 3px 8px;
+    border-radius: 5px;
+    background: #fee;
+}
+
+.delete-btn:hover {
+    color: darkred;
+    background: #fdd;
 }
 
 .message-text {
@@ -97,6 +169,30 @@ h2 {
     border-radius: 12px;
 }
 
+/* Кнопка удаления всех сообщений */
+.delete-all-section {
+    text-align: center;
+    margin: 20px 0;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.delete-all-btn {
+    display: inline-block;
+    background: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.delete-all-btn:hover {
+    background: #c82333;
+}
+
+/* Форма */
 .form-section {
     margin-top: 30px;
     padding-top: 20px;
@@ -111,7 +207,6 @@ input, textarea {
     border-radius: 8px;
     font-size: 14px;
     font-family: inherit;
-    transition: border-color 0.2s;
 }
 
 input:focus, textarea:focus {
@@ -129,11 +224,69 @@ button {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: transform 0.2s;
 }
 
 button:hover {
     transform: translateY(-2px);
+}
+
+/* Страница подтверждения удаления всех */
+.warning-box {
+    text-align: center;
+    padding: 30px;
+    background: #f8d7da;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.warning-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.warning-text {
+    font-size: 18px;
+    color: #721c24;
+    margin-bottom: 10px;
+}
+
+.warning-note {
+    color: #999;
+    font-size: 14px;
+}
+
+.confirm-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn-confirm {
+    background: #dc3545;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-confirm:hover {
+    background: #c82333;
+    transform: none;
+}
+
+.btn-cancel {
+    background: #6c757d;
+    padding: 12px 25px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-cancel:hover {
+    background: #5a6268;
 }
 
 footer {

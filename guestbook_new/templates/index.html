@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Гостевая книга</title>
+    <title>📖 Гостевая книга</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -18,20 +18,40 @@
         <div class="alert error">{{ error }}</div>
         {% endif %}
         
+        <!-- Счётчик сообщений -->
+        <div class="counter">
+            📊 Всего сообщений: {{ total_count }}
+        </div>
+        
+        <!-- Сортировка -->
+        <div class="sort-links">
+            <span>📅 Сортировка:</span>
+            <a href="/sort/newest" {% if current_sort == 'newest' %}class="active"{% endif %}>🆕 Сначала новые</a>
+            <a href="/sort/oldest" {% if current_sort == 'oldest' %}class="active"{% endif %}>📆 Сначала старые</a>
+        </div>
+        
         <h2>📝 Сообщения</h2>
         
         {% if messages %}
             {% for msg in messages %}
-            <div class="message {% if loop.index0 % 2 == 0 %}even{% else %}odd{% endif %}">
+            <div class="message {% if loop.index0 % 2 == 0 %}even{% else %}odd{% endif %} {% if msg.created_at == today %}fresh{% endif %}">
                 <div class="message-header">
                     <span class="name">👤 {{ msg.name }}</span>
                     <span class="date">📅 {{ msg.date_ru }}</span>
+                    <a href="/delete/{{ msg.id }}" class="delete-btn" onclick="return confirm('🗑 Удалить сообщение от {{ msg.name }}?')">🗑 Удалить</a>
                 </div>
                 <div class="message-text">💬 {{ msg.message }}</div>
             </div>
             {% endfor %}
         {% else %}
-            <p class="empty">Пока нет сообщений. Будьте первым!</p>
+            <p class="empty">😔 Пока нет сообщений. Будьте первым!</p>
+        {% endif %}
+        
+        <!-- Кнопка удаления всех сообщений -->
+        {% if total_count > 0 %}
+        <div class="delete-all-section">
+            <a href="/delete-all" class="delete-all-btn" onclick="return confirm('⚠️ ВНИМАНИЕ! Вы действительно хотите удалить ВСЕ сообщения ({{ total_count }} шт.)?')">🗑 Удалить все сообщения</a>
+        </div>
         {% endif %}
         
         <div class="form-section">
